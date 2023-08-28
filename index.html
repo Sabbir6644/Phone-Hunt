@@ -14,25 +14,41 @@
 </head>
 
 <body class="container mx-auto">
-<section class="mt-7">
-<input id="input_field" type="text" placeholder="Search..." class="input input-bordered w-full max-w-xs mx-auto" />
-<button onclick="inputResult()" class="btn btn-primary">Search</button>
-</section>
-<section>
-     <div id="phone-Container" class="container grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          
-         
-     </div>
-     <!-- Modal -->
-<dialog id="show_detail_modal" class="modal">
-  <form method="dialog" class="modal-box">
-     <div id="modalContainer">
-          
-     </div>
-  </form>
-</dialog>
-</section>
-<script src="index.js"></script>
+     <section class="mt-7 flex justify-center">
+          <div>
+               <input id="input_field" type="text" placeholder="Search..."
+               class="input input-bordered max-w-xs mx-auto" />
+               <button onclick="inputResult()"
+                    class="btn btn-primary">Search</button>
+          </div>
+
+     </section>
+
+
+     <section class="my-8">
+          <!-- Seinner Section -->
+          <div id="spinner" class="text-center my-10 hidden">
+               <span class="loading loading-spinner loading-md"></span>
+          </div>
+          <div id="phone-Container" class="container grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+
+
+          </div>
+
+          <!-- Conditional Show Button -->
+          <div id="showAllDiv" class="hidden">
+               <button onclick="showAll()" id="ShowAllBtn" class="btn btn-accent ">Show All</button>
+          </div>
+          <!-- Modal -->
+          <dialog id="show_detail_modal" class="modal">
+               <form method="dialog" class="modal-box">
+                    <div id="modalContainer">
+
+                    </div>
+               </form>
+          </dialog>
+     </section>
+     <script src="index.js"></script>
 </body>
 
 </html>

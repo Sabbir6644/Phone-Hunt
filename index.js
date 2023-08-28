@@ -1,24 +1,37 @@
-const inputResult = () => {
+const inputResult = (isShowAll) => {
+     toggolSpinner(true);
      const inputField = document.getElementById('input_field');
      const inputValue = inputField.value;
-     loadPhone(inputValue)
+     loadPhone(inputValue, isShowAll);
 }
 
-const loadPhone = async (input) => {
+const loadPhone = async (input, isShowAll) => {
      const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${input}`);
      // "input"
      const data = await res.json();
      //console.log(data);
      const phones = data.data;
-     displayPhone(phones);
+     displayPhone(phones, isShowAll);
 
 
 }
-const displayPhone = phones =>{
+const displayPhone = (phones, isShowAll) =>{
      const phoneContainer = document.getElementById('phone-Container');
      phoneContainer.textContent = ''
+     const showAllDiv = document.getElementById('showAllDiv');
+     //console.log(phones.length);
+     console.log(isShowAll);
+     if(phones.length >12 && !isShowAll){
+           showAllDiv.classList.remove('hidden');
+          showAllDiv.classList.add('flex', 'justify-center', 'my-4');
+     }else{
+          showAllDiv.classList.add('hidden');
+     }
+     if(!isShowAll){
+          phones = phones.slice(0,12);
+     }
      phones.forEach(phone => {
-          //console.log(phone);
+          
           const div = document.createElement('div');
           div.classList = `card bg-base-100 shadow-xl`;
           div.innerHTML = `
@@ -27,14 +40,18 @@ const displayPhone = phones =>{
                  <h2 class="text-3xl text-center">${phone.phone_name}</h2>
                  <p class= "text-2xl text-center">${phone.slug}</p>
                  <div class="card-actions justify-center">
-                   <button onclick= "handleDetailes('${phone.slug}')" class="btn btn-primary">Show Details</button>
+                   <button onclick= "handleDetailes('${phone.slug}'), toggolSpinner(true);" class="btn btn-primary">Show Details</button>
                  </div>
                </div>
           ` 
           phoneContainer.appendChild(div);
+          
      });
+     toggolSpinner(false);
 }
-
+const showAll = ()=>{
+     inputResult(true)
+}
 const handleDetailes = async(id) => {
      const res = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
      const data = await res.json();
@@ -43,7 +60,6 @@ const handleDetailes = async(id) => {
 
 }
 const showModal = (phone)=>{
-     console.log(phone);
      show_detail_modal.showModal()
      const modalContainer= document.getElementById('modalContainer');
      modalContainer.textContent = ''
@@ -66,9 +82,17 @@ const showModal = (phone)=>{
     </div>
      `
      modalContainer.appendChild(div);
+     toggolSpinner(false);
 }
 
-
+const toggolSpinner = (isLoading)=>{
+     const loadingSpinner = document.getElementById('spinner');
+     if(isLoading){
+          loadingSpinner.classList.remove('hidden');
+     }else{
+          loadingSpinner.classList.add('hidden');  
+     }
+}
 
 
 
